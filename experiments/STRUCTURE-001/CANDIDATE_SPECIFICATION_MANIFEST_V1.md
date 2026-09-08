@@ -412,6 +412,63 @@ No implementation is authorized by this manifest.
 
 ---
 
+## A16. Non-tautology gate
+
+STRUCTURE-001 distinguishes canonical mathematical consequences of a chosen construction from non-tautological structure-discovery hypotheses.
+
+For every instantiated candidate, the manifest must declare one of two epistemic classes:
+
+```text
+FORMAL_BASELINE
+STRUCTURE_HYPOTHESIS
+```
+
+The gate is:
+
+```math
+\boxed{
+P_i\in\operatorname{Th}
+\left(
+C_i,
+\operatorname{Dom}(C_i),
+Z_i,
+\text{ordinary mathematics}
+\right)
+\Longrightarrow
+\texttt{FORMAL\_BASELINE}.
+}
+```
+
+Here `\operatorname{Th}` denotes the ordinary mathematical consequences of the frozen candidate construction, its semantic type domain, and its declared auxiliary semantics. This gate does not require a general theorem prover; each candidate record must supply a prospective non-tautology argument sufficient to justify its epistemic class before any system construction.
+
+A `FORMAL_BASELINE` may establish that the operational object admits a canonical or conditional mathematical encoding and may serve as a control or reference object. It may not by itself count as a discovered nontrivial common structure for the purpose of the STRUCTURE-001 null hypothesis.
+
+```math
+\boxed{
+\texttt{FORMAL\_BASELINE}
+\not\Rightarrow
+H_0\text{ rejected}.
+}
+```
+
+A candidate may be classified `STRUCTURE_HYPOTHESIS` only when its frozen `P_i` is not guaranteed solely by `C_i`, `Dom(C_i)`, `Z_i`, and ordinary mathematical consequences of those definitions. Its record must identify the operationally variable relation whose truth value can differ across valid typed systems without changing the candidate definition.
+
+If the non-tautology status cannot be justified prospectively, the candidate is classified `FORMAL_BASELINE` rather than receiving structure-discovery credit.
+
+The permanent anti-tautology rule is:
+
+```math
+\boxed{
+\text{researcher construction}
+\not\rightarrow
+\text{automatic theorem}
+\not\rightarrow
+\text{claimed scientific discovery}.
+}
+```
+
+---
+
 # Part B — Instantiated Candidate Records
 
 ## B0. Candidate index
@@ -426,7 +483,7 @@ The prospective V1 candidate ontology contains:
 | `S-TOP-001` | Topological | Reachability dual Alexandrov bitopology | F1, F2, F3, F4, F5 |
 | `S-GEO-001` | Geometric | Cost-induced directed extended metric | F3, F5 |
 | `S-INF-001` | Informational | T-blind admissible history-quotient lattice | F4, F5 |
-| `S-DYN-001` | Dynamical | Descent of action dynamics to future-equivalence classes | F1, F2, F3, F5 |
+| `S-DYN-001` | Dynamical | Congruence of future-equivalence under action dynamics | F1, F2, F3, F5 |
 
 No standalone `S-INV-*` primary candidate is instantiated. Representation invariance is already a required criterion for every candidate, and no nonredundant standalone invariant construction is admitted prospectively here. This is an ontology decision made before system construction, not a scientific result.
 
@@ -434,7 +491,9 @@ No standalone `S-INV-*` primary candidate is instantiated. Representation invari
 
 ## B1. `S-ALG-001` — Executable-path partial composition
 
-**Layer:** Algebraic
+**Layer:** Algebraic  
+**Epistemic class:** `FORMAL_BASELINE`  
+**Non-tautology argument:** The primary claim is an ordinary mathematical consequence of literal finite-sequence concatenation together with the frozen whole-path admissibility semantics. Its positive validation is therefore a formal baseline and cannot reject `H_0`.
 
 ### Scientific claim
 
@@ -528,13 +587,15 @@ Operational isomorphisms transport paths pointwise.
 
 ### Forbidden stronger interpretation
 
-Survival does not establish that all future-transformability is fundamentally categorical, algebraic, or compositional.
+Survival does not establish that all future-transformability is fundamentally categorical, algebraic, or compositional. As a `FORMAL_BASELINE`, positive validation does not reject `H_0`.
 
 ---
 
 ## B2. `S-REL-001` — Exact future-transformational kernel quotient
 
-**Layer:** Relational
+**Layer:** Relational  
+**Epistemic class:** `FORMAL_BASELINE`  
+**Non-tautology argument:** Equivalence of the exact kernel relation and the coarsest exact factorization property are ordinary consequences of equality and kernel quotienting. Their positive validation is formal control, not structure discovery, and cannot reject `H_0`.
 
 ### Scientific claim
 
@@ -620,13 +681,15 @@ Isomorphism of quotient sets induced by operational transport, preserving fibers
 
 ### Forbidden stronger interpretation
 
-Survival does not establish that this quotient is sufficient for every future task, approximate setting, or history-dependent system.
+Survival does not establish that this quotient is sufficient for every future task, approximate setting, or history-dependent system. As a `FORMAL_BASELINE`, positive validation does not reject `H_0`.
 
 ---
 
 ## B3. `S-COMB-001` — Operational SCC condensation order
 
-**Layer:** Combinatorial
+**Layer:** Combinatorial  
+**Epistemic class:** `FORMAL_BASELINE`  
+**Non-tautology argument:** SCC equivalence, acyclicity of the condensation graph, and the induced reachability partial order are standard graph-theoretic consequences of the SCC construction. Positive validation therefore establishes a canonical formal baseline only.
 
 ### Scientific claim
 
@@ -712,13 +775,15 @@ Directed-graph isomorphism of condensations together with order isomorphism of `
 
 ### Forbidden stronger interpretation
 
-Survival does not establish that SCC condensation is a complete description of future-transformability or that Revisics is fundamentally graph-theoretic.
+Survival does not establish that SCC condensation is a complete description of future-transformability or that Revisics is fundamentally graph-theoretic. As a `FORMAL_BASELINE`, positive validation does not reject `H_0`.
 
 ---
 
 ## B4. `S-TOP-001` — Reachability dual Alexandrov bitopology
 
-**Layer:** Topological
+**Layer:** Topological  
+**Epistemic class:** `FORMAL_BASELINE`  
+**Non-tautology argument:** Given the frozen partial order, the declared upward and downward Alexandrov topologies and their specialization-order properties are ordinary order/topology consequences of the construction. This is a canonical topological baseline, not a structure-discovery hypothesis.
 
 ### Scientific claim
 
@@ -815,13 +880,15 @@ Bitopological isomorphism induced by the transported SCC order, preserving the o
 
 ### Forbidden stronger interpretation
 
-Survival establishes only this exact reachability-induced dual Alexandrov construction at tested scope. It does not establish that topology as a whole is uniquely foundational for Revisics.
+Survival establishes only this exact reachability-induced dual Alexandrov construction at tested scope. It does not establish that topology as a whole is uniquely foundational for Revisics. As a `FORMAL_BASELINE`, positive validation does not reject `H_0`.
 
 ---
 
 ## B5. `S-GEO-001` — Cost-induced directed extended metric
 
-**Layer:** Geometric
+**Layer:** Geometric  
+**Epistemic class:** `FORMAL_BASELINE`  
+**Non-tautology argument:** Under the semantic domain's nonnegative additive path-cost assumptions, zero self-distance and the directed triangle inequality are shortest-path consequences of the declared cost construction. The result is therefore a conditional induced geometry baseline rather than positive evidence that geometry is forced.
 
 ### Scientific claim
 
@@ -920,13 +987,15 @@ Isometry of directed extended-distance spaces under transported states.
 
 ### Forbidden stronger interpretation
 
-Survival does not establish Euclidean geometry, manifold structure, local differential geometry, symmetry, or a universal scalar of revisability.
+Survival does not establish Euclidean geometry, manifold structure, local differential geometry, symmetry, or a universal scalar of revisability. As a `FORMAL_BASELINE`, positive validation does not reject `H_0`.
 
 ---
 
 ## B6. `S-INF-001` — T-blind admissible history-quotient lattice
 
-**Layer:** Informational
+**Layer:** Informational  
+**Epistemic class:** `FORMAL_BASELINE`  
+**Non-tautology argument:** The lattice claim is treated prospectively as a formal property of the complete T-blind admissible-equivalence construction rather than as evidence that future-transformability empirically forces information-lattice structure. Positive validation therefore cannot reject `H_0`.
 
 ### Scientific claim
 
@@ -1024,24 +1093,33 @@ Lattice isomorphism induced by transport of histories and equivalence relations.
 
 ### Forbidden stronger interpretation
 
-Survival does not establish that any nontrivial quotient is future-sufficient. That remains a later F4 question under V1.
+Survival does not establish that any nontrivial quotient is future-sufficient. That remains a later F4 question under V1. As a `FORMAL_BASELINE`, positive validation does not reject `H_0`.
 
 ---
 
-## B7. `S-DYN-001` — Descent of action dynamics to future-equivalence classes
+## B7. `S-DYN-001` — Congruence of future-equivalence under action dynamics
 
-**Layer:** Dynamical
+**Layer:** Dynamical  
+**Epistemic class:** `STRUCTURE_HYPOTHESIS`  
+**Non-tautology argument:** The candidate construction freezes a future-transformational equivalence and the raw declared action dynamics without repairing failures of class consistency. The primary claim is the contingent congruence condition itself: valid typed systems may in principle have future-equivalent current states whose action-definedness or successor future-equivalence differs. Therefore `P` is not granted merely by forming the quotient; it must be tested on the later frozen systems.
 
 ### Scientific claim
 
-Exact future-transformational equivalence is a congruence for declared one-step action dynamics only when action execution is class-consistent. When it is, action dynamics descend to a well-defined partial system on future-equivalence classes.
+Declared future-transformational equivalence is preserved by one-step action dynamics exactly when the action dynamics are class-consistent. STRUCTURE-001 tests the contingent question of whether that congruence property holds across the candidate's prospectively declared scope.
 
 ### Type domain `Dom(C)`
 
 Operational objects for which:
 
-1. current-state future-transformability is a single-valued typed map `\Theta_\mathfrak O(x)=\mathcal T^\kappa(x)`;
-2. each action `a` defines a deterministic partial transition
+1. a single-valued typed future-transformability signature
+
+   ```math
+   \Theta_\mathfrak O:X\rightarrow Y
+   ```
+
+   is mechanically derived from declared future-transformability under the frozen operational semantics, with exact equality in `Y`;
+2. the signature derivation is part of the operational semantics rather than a candidate-selected auxiliary choice;
+3. each action `a` defines a deterministic partial transition
 
    ```math
    \delta_a:X\rightharpoonup X.
@@ -1059,15 +1137,13 @@ x\sim_\mathcal T y
 
 Let `Q_\mathcal T=X/{\sim_\mathcal T}`.
 
-For each action `a`, define the candidate quotient transition
+The candidate output retains:
 
-```math
-\bar\delta_a([x])=[\delta_a(x)]
-```
+1. the exact quotient `Q_\mathcal T`;
+2. the raw partial transitions `\{\delta_a\}`;
+3. for each action and equivalence class, the unmodified representative-level definedness and successor classes needed to test congruence.
 
-whenever that value is independent of representative.
-
-The output records `Q_\mathcal T`, the candidate quotient transitions, and whether each is well-defined.
+No representative is selected to force descent, and no failed class is repaired or removed.
 
 ### Claim `P`
 
@@ -1087,7 +1163,7 @@ For every action `a` and all `x\sim_\mathcal T y`:
    \delta_a(x)\sim_\mathcal T\delta_a(y).
    ```
 
-Thus every `\bar\delta_a` is a well-defined partial map on `Q_\mathcal T`.
+Equivalently, the frozen future-equivalence relation is a congruence for every declared partial action, so and only so do the action maps descend without representative choice to well-defined partial maps on `Q_\mathcal T`.
 
 ### Auxiliary class `Z`
 
@@ -1097,11 +1173,11 @@ Z_{\mathrm{DYN}}=\{\varnothing\}.
 
 ### Auxiliary-completeness argument
 
-The candidate uses exact equality of `\Theta`, declared deterministic action transitions, and the induced quotient. No representative selection, approximate threshold, action ordering, coordinate, or tie-break is introduced.
+The future-transformability signature and action transitions are frozen operational inputs under `Dom(C)`. The candidate uses exact equality and retains all representative-level action behavior. No representative selection, approximate threshold, action ordering, coordinate, repair rule, or tie-break is introduced.
 
 ### Output equivalence `\cong`
 
-Conjugacy/isomorphism of the quotient partial action systems under operational transport.
+Isomorphism of the quotient-plus-raw-action test object under operational transport, preserving equivalence classes, action definedness, and successor-class relations.
 
 ### Auxiliary transport `\tau_\phi`
 
@@ -1115,21 +1191,21 @@ Conjugacy/isomorphism of the quotient partial action systems under operational t
 \{F1,F2,F3,F5\}.
 ```
 
-**F4 exclusion:** this candidate is constructed from target-informed current-state future-equivalence and is not admissible as an F4 sufficient-state construction under the V1 no-target-leak rule.
+**F4 exclusion:** this candidate uses a declared future-transformability signature to define its current-state equivalence and is not admissible as an F4 sufficient-state construction under the V1 no-target-leak rule.
 
 ### Failure contract
 
-`CONDITIONAL_IF:` quotient dynamics require an unfrozen representative-selection rule, approximate equivalence threshold, or action-matching convention.
+`CONDITIONAL_IF:` the future-equivalence or congruence test requires an unfrozen representative-selection rule, approximate equivalence threshold, signature choice, or action-matching convention.
 
-`REPRESENTATION_DEPENDENT_IF:` an operational twin fails to yield a conjugate quotient action system.
+`REPRESENTATION_DEPENDENT_IF:` an operational twin fails to preserve the quotient and congruence verdict under transport.
 
 `REFUTED_IF:` there exist `x\sim_\mathcal T y` and action `a` such that definedness differs or defined successors are not future-equivalent.
 
-`CONTROL_FAILURE_IF:` determinism is violated despite the declared type, future-equivalence is computed incorrectly, or F5 action transport fails.
+`CONTROL_FAILURE_IF:` determinism is violated despite the declared type, the frozen future-transformability signature is computed incorrectly, or F5 action transport fails.
 
 ### Forbidden stronger interpretation
 
-Survival does not establish dynamic controllability, Markov sufficiency, corrigibility, or that future-equivalence is the correct quotient for every downstream task.
+Survival does not establish dynamic controllability, Markov sufficiency, corrigibility, or that future-equivalence is the correct quotient for every downstream task. It would establish only the frozen congruence claim at tested scope.
 
 ---
 
