@@ -73,7 +73,7 @@ Test dependency: `pytest`.
 
 No network access, model calls, randomness, wall-clock dependence, filesystem enumeration dependence, locale dependence, process scheduling dependence, or hash-randomization dependence may affect semantic output.
 
-All semantic collections must be explicitly sorted by frozen canonical keys before serialization, hashing, comparison, or ledger emission.
+All semantic collections must be explicitly sorted by frozen canonical keys before serialization, hashing, comparison, or ledger emission. When canonical object bytes tie under automorphism, canonical transport bytes are part of that frozen total ordering as specified in Section 10.
 
 ## 5. Package structure
 
@@ -135,6 +135,7 @@ Implementation records must be immutable dataclasses/tuples with explicit primit
 Minimum record classes:
 
 ```text
+PreImplementationCustodyRecord
 RawConstructionRecord
 CanonicalWorldRecord
 ValidityRecord
@@ -294,8 +295,11 @@ For a family object with state carrier size `n` and action carrier size `m`:
 2. enumerate every admissible action-label permutation;
 3. transport all family-native metadata exactly;
 4. canonical-encode each transported object;
-5. select the lexicographically least canonical byte string as the representative;
-6. retain the winning transport and source provenance.
+5. canonical-encode the exact transport witness as `(phi_X, phi_A)`, with each permutation represented as its image sequence in ascending source-label order;
+6. select the lexicographically least pair `(canonical object bytes, canonical transport bytes)` under bytewise lexicographic order;
+7. use the first component as the canonical representative and retain the second component as the unique canonicalization transport witness together with source provenance.
+
+Thus automorphisms that produce identical minimum object bytes cannot leave the provenance witness underdetermined: the minimum transport bytes break the tie deterministically. No implementation may choose the first encountered minimizing transport.
 
 F3 keeps the ordered resource carrier fixed; it is not relabeled.
 
@@ -356,6 +360,8 @@ RecodingID
 identity-recoding flag
 ```
 
+Every `ProvenanceEdge` is written to the dedicated canonical provenance ledger `L_P`. It is not permitted to exist only as an uncommitted in-memory association or as incidental metadata in another ledger.
+
 Provenance is append-only within a run. Corrections require a fresh run, not in-place mutation.
 
 ## 13. Run classes
@@ -366,6 +372,8 @@ Two run classes are mandatory:
 CONTROL_RUN
 PRIMARY_UNIVERSE_RUN
 ```
+
+Before either run class is allowed, I0 must emit and retain a `PreImplementationCustodyRecord` satisfying the parent S2 zero-state contract. This custody record is implementation-control evidence, not a generated-world artifact.
 
 ### CONTROL_RUN
 
@@ -394,7 +402,7 @@ Each run emits retained canonical ledgers plus an integrity bundle.
 Conceptually:
 
 ```math
-AuditBundle = SHA256(CanonicalEncode(M,I,L_R,L_C,L_V,L_{F5},N))
+AuditBundle = SHA256(CanonicalEncode(M,I,L_R,L_C,L_V,L_P,L_{F5},N))
 ```
 
 where:
@@ -404,6 +412,7 @@ where:
 - `L_R` = raw-construction ledger/root;
 - `L_C` = canonical-world ledger/root;
 - `L_V` = validity ledger/root;
+- `L_P` = provenance-edge ledger/root;
 - `L_F5` = F5 recoding ledger/root;
 - `N` = typed count record.
 
@@ -412,7 +421,7 @@ For scalability, each ledger is written as canonically ordered records and summa
 Replay acceptance requires both:
 
 ```text
-record-level equality
+record-level equality across L_R, L_C, L_V, L_P, L_F5 and N
 AND
 AuditBundle_A == AuditBundle_B
 ```
@@ -424,9 +433,21 @@ A matching top-level hash without record-level equality is insufficient evidence
 ### I0 — CUSTODY
 
 - implementation branch starts from exact `f5874063b06997f49f3ee80d291de879c8d27a7f`;
-- parent scientific artifacts byte-identical to the locked versions;
-- no committed generated-world, recoding-output, or candidate-outcome artifacts at implementation start;
-- no candidate code imported by construction machinery.
+- parent scientific artifacts are byte-identical to the locked versions;
+- immediately before implementation begins, emit and retain a canonical `PreImplementationCustodyRecord` asserting exactly:
+
+  ```text
+  raw constructions generated        = 0
+  canonical worlds generated         = 0
+  F5 recoding cases generated        = 0
+  candidate/case outcomes observed   = 0
+  ```
+
+- the custody record binds the exact manifest SHA, parent-lock identities, implementation-branch base, and the four zero-state assertions; it is retained as implementation-control evidence;
+- repository inspection independently confirms that no committed generated-world, recoding-output, or candidate-outcome artifacts exist, but repository inspection is supplementary and cannot substitute for the four zero-state assertions;
+- no candidate code is imported by construction machinery.
+
+Failure to establish or retain this pre-implementation custody record is `CONTROL_FAILURE -> STOP` before any control run.
 
 ### I1 — GENERATION FIDELITY
 
@@ -440,6 +461,7 @@ A matching top-level hash without record-level equality is insufficient evidence
 - equivalent representations canonicalize identically exactly where frozen rules require;
 - distinct canonical classes are not merged;
 - canonicalization is idempotent;
+- canonical transport witnesses are uniquely selected by the frozen `(object bytes, transport bytes)` total order, including automorphism ties;
 - F5 required recodings are never removed by canonical deduplication;
 - exact canonical count controls reproduce the manifest values.
 
@@ -448,6 +470,7 @@ A matching top-level hash without record-level equality is insufficient evidence
 - family validity is rule-derived and reproducible;
 - invalidity never triggers repair;
 - every canonical object has complete raw provenance;
+- every provenance edge is present in the committed canonical provenance ledger `L_P`;
 - every F5 recoding has complete base/instance/map provenance;
 - all content IDs reproduce from retained canonical bytes.
 
@@ -458,7 +481,7 @@ Two clean quarantined complete control runs under the same implementation identi
 - identical typed counts;
 - identical canonical record streams;
 - identical validity streams;
-- identical provenance edges;
+- identical provenance-edge ledger and root;
 - identical F5 recoding ledger;
 - identical ledger roots;
 - identical `AuditBundle`.
@@ -477,8 +500,9 @@ A future optimized implementation is admissible only if it proves extensional eq
 generation membership
 canonical bytes
 canonical identities
+canonical transport witnesses
 validity decisions
-provenance edges
+provenance edges and provenance-ledger membership
 F5 recoding membership and IDs
 typed counts
 ```
@@ -492,11 +516,11 @@ Development follows TDD.
 Tests are divided into:
 
 1. **local semantic unit tests** — tiny hand-checkable carriers and known canonical transports;
-2. **metamorphic tests** — relabeling invariance, canonicalization idempotence, order independence;
+2. **metamorphic tests** — relabeling invariance, canonicalization idempotence, order independence, and deterministic transport tie-breaking under automorphisms;
 3. **count controls** — exact F1-F5 declared totals;
 4. **negative controls** — malformed partitions, invalid resource updates, invalid F5 transports, provenance mismatch;
-5. **replay controls** — two clean control runs compare record-by-record and by audit digest;
-6. **custody tests** — manifest SHA and parent lock identities are hard failures on mismatch.
+5. **replay controls** — two clean control runs compare record-by-record and by audit digest, including the dedicated provenance ledger;
+6. **custody tests** — manifest SHA and parent lock identities are hard failures on mismatch, and the retained pre-implementation custody record must assert all four S2 zero-state fields.
 
 No test may use candidate pass/fail outcomes as fixtures for construction behavior.
 
@@ -531,6 +555,7 @@ It does not establish the scientific correctness of any candidate, representativ
 ```text
 f587406
    -> isolated implementation branch
+   -> retained pre-implementation S2/I0 custody record
    -> reference package + tests
    -> CONTROL_RUN A
    -> CONTROL_RUN B
