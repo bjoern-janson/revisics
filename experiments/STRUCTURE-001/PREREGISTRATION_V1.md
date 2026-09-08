@@ -10,7 +10,7 @@
 
 ## 1. Research question
 
-Which nontrivial mathematical structures, if any, are forced by declared operational facts of future-transformability, invariant under admissible representation changes, and shared across the preregistered system classes?
+Which nontrivial mathematical structures, if any, are forced by declared operational facts of future-transformability, invariant under admissible representation changes, and shared across their prospectively declared family scopes?
 
 The experiment is explicitly a **structure-discovery problem**.
 
@@ -120,38 +120,96 @@ Observed equality of state representations is therefore not sufficient evidence 
 ### Null hypothesis
 
 ```math
-\boxed{ H_0: \text{No nontrivial common mathematical structure beyond the declared operational relations survives all preregistered tests.} }
+\boxed{ H_0: \text{No nontrivial additional mathematical structure is forced at tested scope across its prospectively declared family scope.} }
 ```
+
+Here “additional” excludes the operational relations and objects explicitly derived by definition in Section 4.
 
 ### Alternative
 
-At least one nontrivial candidate structure satisfies all three primary criteria:
+At least one nontrivial additional candidate structure satisfies all three primary criteria at its prospectively declared scope:
 
 ```math
-\boxed{ \text{existence} + \text{necessity} + \text{representation invariance}. }
+\boxed{ \text{existence} + \text{operational necessity} + \text{representation invariance}. }
 ```
 
-A surviving structure is a **candidate common structure**, not a universal law.
+A surviving structure is a **candidate common structure at the tested scope**, not a universal law.
 
 ---
 
-## 7. Primary evaluation criteria
+## 7. Candidate construction contract and primary evaluation criteria
 
-For each candidate structure `S`, evaluate three independent properties.
+A broad mathematical family such as “topology” or “geometry” is not itself a testable candidate. Every primary candidate must first be converted into an exact prospective construction contract.
 
-### 7.1 Existence
+### 7.1 Candidate specification gate
 
-Does the relevant structure actually occur in the declared system class?
+For each primary candidate `S`, a prospective candidate-specification record must freeze, before exact system instances are selected or constructed:
 
-A structure absent from a system class is not forced by that class.
+```math
+\boxed{ \operatorname{Scope}(S)\subseteq\{F1,F2,F3,F4,F5\} }
+```
 
-### 7.2 Necessity
+and an exact construction map
 
-Can the structure be removed while preserving the preregistered operational facts, or does it follow from them?
+```math
+\boxed{ C_S:(\mathfrak O,z)\mapsto S_{\mathfrak O,z},\qquad z\in Z_S(\mathfrak O). }
+```
 
-A property that appears only after adding unlisted assumptions is classified as **conditional**, not foundational.
+The record must also freeze:
 
-### 7.3 Representation invariance
+- the defining candidate property `P_S` being tested;
+- the admissible auxiliary-choice set `Z_S(\mathfrak O)`;
+- the equality or isomorphism criterion `\cong_S` for candidate outputs;
+- the exact family scope `\operatorname{Scope}(S)`;
+- any applicability restrictions;
+- and all auxiliary assumptions.
+
+If no auxiliary choice is required, then prospectively:
+
+```math
+Z_S(\mathfrak O)=\{\varnothing\}.
+```
+
+A candidate without a frozen `C_S`, `P_S`, `Z_S`, `\cong_S`, and family scope is **not testable under v1**.
+
+The same candidate construction may not be changed by family after results are known. Family-specific substitutes are different candidates and require different candidate IDs.
+
+### 7.2 Existence
+
+Does the exact preregistered construction `C_S` produce the claimed candidate object or property in every tested instance within its declared scope?
+
+A candidate absent from a tested instance within its claimed scope is not forced at that scope.
+
+Merely showing that a mathematical structure *can* be placed on the underlying carrier is not evidence of operational induction.
+
+### 7.3 Operational necessity
+
+“Necessity” is given a counterfactual operational meaning.
+
+For a frozen operational object `\mathfrak O`, the candidate property is necessary only if it survives every admissible auxiliary completion that leaves the operational object unchanged:
+
+```math
+\boxed{ \forall z\in Z_S(\mathfrak O),\quad P_S\!\left(C_S(\mathfrak O,z)\right)=\text{true}. }
+```
+
+If the claim concerns a particular induced structure rather than merely a property, then every admissible completion must additionally yield the same structure up to the preregistered output equivalence:
+
+```math
+\boxed{ \forall z,z'\in Z_S(\mathfrak O),\quad C_S(\mathfrak O,z)\cong_S C_S(\mathfrak O,z'). }
+```
+
+Thus a candidate can be **toggled while the operational object is held fixed** iff there exist admissible `z,z'` for which its defining property or claimed isomorphism class changes. Such a candidate is classified **conditional**, not forced at tested scope.
+
+Necessity may be established only by:
+
+1. exhaustive evaluation of the frozen finite auxiliary-choice set; or
+2. a prospective formal proof quantifying over the complete frozen auxiliary-choice class.
+
+Sampling auxiliary choices is insufficient.
+
+A structure that requires an unfrozen neighborhood rule, coordinate system, embedding, weighting, smoothness assumption, composition law, metric choice, or other extra object is therefore not called forced unless that extra object is itself mechanically derived from the frozen operational facts under its own declared contract.
+
+### 7.4 Representation invariance
 
 Let
 
@@ -161,13 +219,51 @@ Let
 
 denote the preregistered operational equivalence relation for a system family.
 
-Then a candidate property must satisfy:
+Then a candidate property must satisfy the prospectively declared transport rule:
 
 ```math
-\boxed{ \mathfrak O\simeq\mathfrak O' \Longrightarrow S(\mathcal T_{\mathfrak O}) \simeq S(\mathcal T_{\mathfrak O'}). }
+\boxed{ \mathfrak O\simeq\mathfrak O' \Longrightarrow C_S(\mathfrak O,z)\cong_S C_S(\mathfrak O',z') }
 ```
 
-A property that changes under an admissible recoding is classified as **representation-dependent**.
+for every admissibly corresponding auxiliary choice `z,z'` under the frozen recoding rule.
+
+A candidate that changes under an admissible recoding is classified **representation-dependent** at the claimed scope.
+
+### 7.5 Cross-family quantifier
+
+“Shared across system classes” is quantified prospectively.
+
+A candidate `S` is **shared across its declared family scope** iff:
+
+1. `\operatorname{Scope}(S)` was frozen before system construction;
+2. the same preregistered candidate construction `C_S`, property `P_S`, auxiliary semantics `Z_S`, and output-equivalence rule `\cong_S` are used in every family in that scope; and
+3. the candidate passes its required criteria in every preregistered instance of every family in that scope.
+
+If
+
+```math
+|\operatorname{Scope}(S)|=1,
+```
+
+the result is **family-local** and may not be described as cross-family common.
+
+If
+
+```math
+|\operatorname{Scope}(S)|\ge2,
+```
+
+and all scoped families pass, the candidate may be described as **cross-family at the tested scope**.
+
+Only if
+
+```math
+\operatorname{Scope}(S)=\{F1,F2,F3,F4,F5\}
+```
+
+and all tests pass may the candidate be described as **study-wide shared across the preregistered families**.
+
+Any family exclusion must be justified prospectively by a type or applicability argument, not by observed candidate performance.
 
 ---
 
@@ -243,7 +339,7 @@ For each finite F4 instance, let the raw observed history through time `t` be
 h_t=(x_0,a_0,x_1,a_1,\ldots,a_{t-1},x_t).
 ```
 
-The F4 construction manifest must freeze a finite evaluation horizon before any future-transformability comparison is inspected. All admissible histories through that horizon are then exhaustively enumerated from the raw operational relation.
+The F4 system-construction manifest must freeze a finite evaluation horizon before any future-transformability comparison is inspected. All admissible histories through that horizon are then exhaustively enumerated from the raw operational relation.
 
 An admissible sufficient-state construction is a deterministic quotient
 
@@ -354,23 +450,51 @@ Continuous-coordinate recodings are not part of the primary F5 v1 control. Any s
 
 ---
 
-## 9. Candidate structure battery
+## 9. Structure layers and candidate battery
 
-The initial battery includes, without commitment to survival:
+The study separates structures that are **derived by the operational definition** from additional mathematical structures that must earn evidentiary status.
 
-- reachability relations;
-- composition / partial composition;
-- future-transformational equivalence;
-- inclusion or preorder structure;
-- graph structure;
-- topology;
-- local geometric structure;
-- metric or pseudometric structure;
-- transition dynamics;
-- information-preserving or reconstructibility structure;
-- invariants under specified transformation classes.
+### 9.1 Derived operational baseline
 
-No primary candidate may be added, removed, or replaced after primary evaluation begins.
+The following are derived operational objects or lossless representations of them:
+
+- the execution relation `\operatorname{Exec}`;
+- one-step reachability represented by `\mathcal T^\kappa`;
+- any path or horizon closure explicitly specified by `\kappa`;
+- and a raw transition graph when it is only a lossless recoding of the execution relation.
+
+These objects are controls and prerequisites. Their existence does **not** count as discovery of a nontrivial additional mathematical structure and cannot by itself reject `H_0`.
+
+In particular:
+
+```math
+\boxed{ \operatorname{Exec}\rightarrow\mathcal T \text{ is derivation, not discovery}. }
+```
+
+### 9.2 Additional candidate structure battery
+
+The primary additional battery is organized by ontological level:
+
+| Layer | Primary candidate family |
+|---|---|
+| Algebraic | composition / partial composition |
+| Relational | future-transformational equivalence; inclusion / preorder |
+| Combinatorial | graph-theoretic structure beyond the raw transition encoding |
+| Topological | topology / connectedness constructions |
+| Geometric | metric / pseudometric / local geometric structure |
+| Informational | reconstruction / sufficient-statistic / information-preservation structure |
+| Dynamical | transition operators / evolution of transformability |
+| Invariant | invariants under specified transformation classes |
+
+The labels in this table are **candidate families**, not claims that the family as a whole is testable or present.
+
+For every primary candidate actually evaluated, the candidate-specification record must instantiate an exact `C_S`, `P_S`, `Z_S`, `\cong_S`, and prospectively declared scope as required by Section 7.
+
+Thus, for example, “topology” is not a test. A specific topology construction from frozen operational data is a testable candidate. “Geometry” is not a test. A specific metric, pseudometric, or local-response construction with a frozen derivation rule is a testable candidate.
+
+A failure of one such construction does not refute every topology or geometry. A success of one such construction does not establish topology or geometry as universally foundational.
+
+No primary candidate family may be removed or replaced after primary evaluation begins.
 
 A new candidate requires a separately committed prospective extension record created before evaluating that candidate. Extension candidates are reported separately and may not alter the preregistered classifications of the v1 primary battery.
 
@@ -378,29 +502,35 @@ A new candidate requires a separately committed prospective extension record cre
 
 ## 10. Classification of outcomes
 
-Every candidate is assigned one of four primary classifications:
+Every testable additional candidate is assigned one of four primary classifications:
 
 ```math
-\boxed{ \text{forced} \;|\; \text{conditional} \;|\; \text{representation-dependent} \;|\; \text{refuted}. }
+\boxed{ \text{FORCED_AT_TESTED_SCOPE} \;|\; \text{CONDITIONAL} \;|\; \text{REPRESENTATION_DEPENDENT} \;|\; \text{REFUTED}. }
 ```
 
-### Forced
+A specification, provenance, enumeration, or implementation failure is a **control failure**, not a scientific classification.
 
-The candidate is present, follows from the declared operational facts under the preregistered semantics, and survives admissible representation changes across the relevant system classes.
+### FORCED_AT_TESTED_SCOPE
 
-### Conditional
+The exact candidate construction is present throughout its prospectively declared scope, satisfies the operational-necessity rule, survives admissible representation changes, and uses the same frozen candidate contract in every scoped family.
 
-The candidate exists only when additional explicitly stated assumptions hold, such as smoothness, composability, monotone resource semantics, a chosen neighborhood structure, or a particular parameterization.
+This label is always scope-indexed. It may not be shortened in interpretation to “universally forced.”
 
-### Representation-dependent
+### CONDITIONAL
 
-The candidate changes under an admissible operationally equivalent recoding.
+The candidate holds only under additional explicitly stated assumptions or auxiliary choices, such as smoothness, composability, monotone resource semantics, a chosen neighborhood rule, coordinate structure, weighting, embedding, or parameterization.
 
-Such a structure is not treated as foundational.
+### REPRESENTATION_DEPENDENT
 
-### Refuted
+The candidate changes under an admissible operationally equivalent recoding at its claimed scope.
 
-A preregistered counterexample demonstrates that the candidate does not hold under its claimed scope.
+Such a structure is not treated as foundational at that scope.
+
+### REFUTED
+
+A preregistered counterexample demonstrates that the exact candidate claim `P_S` fails within its prospectively declared scope.
+
+Refutation applies to the exact preregistered candidate construction and claim. It does not automatically refute the entire surrounding mathematical family.
 
 ---
 
@@ -430,25 +560,37 @@ If only the full-history identity is sufficient, the permitted conclusion is lim
 
 ---
 
-## 12. Primary evidence table
+## 12. Primary evidence tables
 
-The principal output is a survival matrix of the form:
+### 12.1 Derived operational baseline
 
-| Candidate structure | F1 | F2 | F3 | F4 | F5 | Minimum assumptions | Classification |
-|---|---|---|---|---|---|---|---|
-| Reachability relation | | | | | | | |
-| Composition | | | | | | | |
-| Future-equivalence | | | | | | | |
-| Inclusion / preorder | | | | | | | |
-| Graph structure | | | | | | | |
-| Topology | | | | | | | |
-| Local geometry | | | | | | | |
-| Metric structure | | | | | | | |
-| Transition dynamics | | | | | | | |
-| Information structure | | | | | | | |
-| Invariants | | | | | | | |
+The derived baseline is reported separately from structure-discovery claims.
 
-The table is descriptive evidence, not a scorecard intended to crown a preferred formalism.
+| Derived operational object | F1 | F2 | F3 | F4 | F5 | Control status |
+|---|---|---|---|---|---|---|
+| Execution relation | | | | | | |
+| One-step future-transformability `\mathcal T` | | | | | | |
+| Declared path / horizon closure | | | | | | |
+| Raw transition representation | | | | | | |
+
+No entry in this table may be reported as a positive discovery of additional revisic structure.
+
+### 12.2 Additional structure survival matrix
+
+The principal scientific output is a survival matrix of the form:
+
+| Layer | Candidate ID | Declared family scope | Construction map ID | F1 | F2 | F3 | F4 | F5 | Auxiliary choices / minimum assumptions | Classification |
+|---|---|---|---|---|---|---|---|---|---|---|
+| Algebraic | | | | | | | | | | |
+| Relational | | | | | | | | | | |
+| Combinatorial | | | | | | | | | | |
+| Topological | | | | | | | | | | |
+| Geometric | | | | | | | | | | |
+| Informational | | | | | | | | | | |
+| Dynamical | | | | | | | | | | |
+| Invariant | | | | | | | | | | |
+
+Every row must point to the exact prospectively frozen candidate contract. The table is descriptive evidence, not a scorecard intended to crown a preferred formalism.
 
 ---
 
@@ -476,6 +618,18 @@ x_A=x_B \not\Rightarrow \mathcal T_A=\mathcal T_B
 \mathcal T_A\neq\mathcal T_B \not\Rightarrow \text{irreducible history dependence}.
 ```
 
+```math
+\text{some topology exists on }X \not\Rightarrow \text{topology is operationally induced}
+```
+
+```math
+\text{one geometric construction fails} \not\Rightarrow \text{geometry as a mathematical family is refuted}
+```
+
+```math
+\text{one geometric construction survives} \not\Rightarrow \text{geometry is universally foundational}
+```
+
 No scalar “revisability” quantity is assumed by this preregistration.
 
 No universal geometry is assumed.
@@ -491,8 +645,14 @@ No universal order is assumed.
 The strongest warranted positive result from STRUCTURE-001 is:
 
 ```math
-\boxed{ \text{A candidate mathematical structure is operationally induced, invariant under the tested admissible representations, and shared across the tested system classes.} }
+\boxed{ \text{A preregistered candidate construction is forced at tested scope: it is mechanically induced from the frozen operational object, invariant under the tested admissible representations, and shared across every family in its prospectively declared scope.} }
 ```
+
+If the declared scope contains only one family, the result is family-local.
+
+If the declared scope contains multiple families and all pass, the result is cross-family **at that tested scope**.
+
+Only a candidate whose prospectively declared scope contains all five families and passes all corresponding tests may be called study-wide shared across the preregistered families.
 
 This does **not** establish:
 
@@ -500,6 +660,7 @@ This does **not** establish:
 - completeness of the candidate mathematical description;
 - applicability to all systems;
 - uniqueness of the surviving structure;
+- that an entire mathematical family is foundational because one construction survived;
 - or a universal scalar measure of revisability.
 
 The experiment may instead support:
@@ -516,14 +677,14 @@ Either outcome is scientifically admissible.
 
 ## 15. Success condition for the study
 
-The study succeeds if it produces a reproducible classification of candidate structures showing which are:
+The study succeeds if it produces a reproducible, scope-indexed classification of candidate structures showing which are:
 
-1. operationally induced;
+1. operationally induced and forced at tested scope;
 2. assumption-dependent;
 3. representation-dependent;
 4. refuted;
 
-together with explicit minimal counterexamples where applicable.
+with explicit candidate construction maps, declared scopes, auxiliary-choice classes, and minimal counterexamples where applicable.
 
 The study does not require discovery of a positive universal structure.
 
@@ -545,13 +706,39 @@ No later theory may be used to rewrite the earlier operational object merely to 
 
 ---
 
-## 17. Construction and evaluation freeze
+## 17. Prospective specification, construction, and evaluation freeze
 
-This preregistration freezes the scientific question, operational direction, five family roles, F4 sufficient-state rules, F5 operational-isomorphism rules, candidate battery, classification system, forbidden inferences, and claim ceiling.
+This preregistration freezes the scientific question, operational direction, five family roles, F4 sufficient-state rules, F5 operational-isomorphism rules, structure layers, candidate-family battery, classification system, forbidden inferences, and claim ceiling.
 
-It does **not** yet instantiate executable system instances.
+It does **not** yet instantiate executable system instances or exact candidate construction maps.
 
-Before any candidate-structure outcome is evaluated, implementation must produce a prospective construction manifest that freezes:
+### 17.1 Candidate-specification manifest
+
+Before exact F1–F5 system instances are selected or constructed, a separately committed and state-recorded candidate-specification manifest must freeze, for every primary candidate to be evaluated:
+
+- candidate ID and ontological layer;
+- exact `\operatorname{Scope}(S)`;
+- exact construction map `C_S`;
+- exact defining property `P_S`;
+- complete admissible auxiliary-choice class `Z_S`;
+- exact equality / isomorphism criterion `\cong_S`;
+- all applicability restrictions;
+- all auxiliary assumptions;
+- and the deterministic procedure or formal proof used to test operational necessity.
+
+The family scope and candidate construction must therefore be frozen **before system construction**, not after candidate performance is observed.
+
+If a primary candidate lacks this complete specification, then:
+
+```text
+CANDIDATE SPECIFICATION INCOMPLETE -> STOP BEFORE SYSTEM CONSTRUCTION
+```
+
+No primary structure evaluation may proceed.
+
+### 17.2 System-construction manifest
+
+Only after the candidate-specification manifest is frozen may a prospective system-construction manifest freeze:
 
 - the exact finite systems used in F1–F5;
 - all action alphabets and execution relations;
@@ -561,16 +748,20 @@ Before any candidate-structure outcome is evaluated, implementation must produce
 - the exact observation maps used by F2;
 - the exact enumeration procedure for F4 history quotients;
 - the exact enumeration procedure for F5 twin recodings;
-- and all deterministic analysis procedures.
+- and all deterministic system-level analysis procedures.
 
-That manifest must be committed and state-recorded before any primary structure classifications are inspected.
+That manifest must be committed and state-recorded before implementation or any primary structure classification is inspected.
 
-The execution order is:
+After system construction begins, no primary candidate scope, construction map, property, auxiliary-choice class, output-equivalence rule, or classification criterion may be altered.
+
+### 17.3 Execution order
 
 ```text
 PREREGISTRATION V1
         ↓
-CONSTRUCTION MANIFEST
+CANDIDATE-SPECIFICATION MANIFEST
+        ↓
+SYSTEM-CONSTRUCTION MANIFEST
         ↓
 IMPLEMENTATION
         ↓
@@ -585,7 +776,7 @@ SURVIVAL MATRIX + MINIMAL COUNTEREXAMPLES
 INTERPRET ONLY UNDER THE FROZEN CLAIM CEILING
 ```
 
-Any failure of a preregistered operational-equivalence, enumeration, provenance, or implementation control is reported as a control failure and does not become evidence for or against the candidate mathematical structure.
+Any failure of a preregistered candidate specification, operational equivalence, enumeration, provenance, or implementation control is reported as a control failure and does not become evidence for or against the candidate mathematical structure.
 
 No code is authorized by this preregistration itself.
 
@@ -594,7 +785,7 @@ No code is authorized by this preregistration itself.
 ## 18. Frozen scientific sequence
 
 ```math
-\boxed{ \text{Constitution} \rightarrow \texttt{STRUCTURE-001}\ \text{preregistration} \rightarrow \text{construction manifest} \rightarrow \text{implementation} \rightarrow \text{execution}. }
+\boxed{ \text{Constitution} \rightarrow \texttt{STRUCTURE-001}\ \text{preregistration} \rightarrow \text{candidate specification} \rightarrow \text{system construction} \rightarrow \text{implementation} \rightarrow \text{execution}. }
 ```
 
 STRUCTURE-001 is therefore the first Revisics-native attempt to make the proposed object earn its mathematics rather than receive mathematics by declaration.
