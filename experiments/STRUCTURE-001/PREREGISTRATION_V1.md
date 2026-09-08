@@ -170,11 +170,55 @@ If no auxiliary choice is required, then prospectively:
 Z_S(\mathfrak O)=\{\varnothing\}.
 ```
 
+A singleton auxiliary class is valid only if the auxiliary-completeness rule in Section 7.2 is satisfied.
+
 A candidate without a frozen `C_S`, `P_S`, `Z_S`, `\cong_S`, and family scope is **not testable under v1**.
 
 The same candidate construction may not be changed by family after results are known. Family-specific substitutes are different candidates and require different candidate IDs.
 
-### 7.2 Existence
+### 7.2 Auxiliary completeness
+
+The auxiliary-choice class is part of the scientific contract, not a convenience chosen to make a candidate pass.
+
+For each frozen operational object `\mathfrak O`, `Z_S(\mathfrak O)` must expose every admissible candidate-relevant degree of freedom that is not uniquely determined by `\mathfrak O`.
+
+In particular, every construction choice that can change either
+
+```math
+P_S\!\left(C_S(\mathfrak O,z)\right)
+```
+
+or the `\cong_S`-isomorphism class of `C_S(\mathfrak O,z)` while leaving `\mathfrak O` unchanged must appear explicitly as part of `z\in Z_S(\mathfrak O)`.
+
+Equivalently:
+
+```math
+\boxed{ \text{No auxiliary freedom capable of changing the candidate claim may be hidden inside }C_S,P_S,\cong_S,\text{ or the implementation}. }
+```
+
+A coordinate convention, ordering, tie-break, embedding, weighting, neighborhood rule, basis, normalization, initialization, serialization-dependent choice, canonical-label choice, or other non-operational convention may not be made implicit merely by placing it inside the definition or code of `C_S`.
+
+A degree of freedom may be omitted from `Z_S` only if the candidate specification prospectively establishes one of the following:
+
+1. it is uniquely determined by the frozen operational object; or
+2. all admissible alternatives are proven to leave both `P_S` and the `\cong_S`-class unchanged.
+
+Thus
+
+```math
+Z_S(\mathfrak O)=\{\varnothing\}
+```
+
+is permitted only when the candidate-specification record prospectively demonstrates that no candidate-relevant non-operational freedom remains.
+
+Auxiliary completeness must be established before system construction by either:
+
+1. exhaustive enumeration of a finite declared construction-choice space together with a proof that it is complete; or
+2. a prospective formal argument characterizing the complete admissible choice class and proving that every candidate-relevant non-operational degree of freedom is represented in `Z_S`.
+
+If auxiliary completeness cannot be established, the candidate specification is incomplete and primary evaluation must stop before system construction.
+
+### 7.3 Existence
 
 Does the exact preregistered construction `C_S` produce the claimed candidate object or property in every tested instance within its declared scope?
 
@@ -182,7 +226,7 @@ A candidate absent from a tested instance within its claimed scope is not forced
 
 Merely showing that a mathematical structure *can* be placed on the underlying carrier is not evidence of operational induction.
 
-### 7.3 Operational necessity
+### 7.4 Operational necessity
 
 “Necessity” is given a counterfactual operational meaning.
 
@@ -209,34 +253,56 @@ Sampling auxiliary choices is insufficient.
 
 A structure that requires an unfrozen neighborhood rule, coordinate system, embedding, weighting, smoothness assumption, composition law, metric choice, or other extra object is therefore not called forced unless that extra object is itself mechanically derived from the frozen operational facts under its own declared contract.
 
-### 7.4 Representation invariance
+### 7.5 Representation invariance and auxiliary transport
 
 Let
 
 ```math
-\mathfrak O\simeq\mathfrak O'
+\phi:\mathfrak O\simeq\mathfrak O'
 ```
 
-denote the preregistered operational equivalence relation for a system family.
+denote a preregistered admissible operational isomorphism for a system family.
 
-Then a candidate property must satisfy the prospectively declared transport rule:
+The candidate specification must prospectively freeze the induced auxiliary transport
 
 ```math
-\boxed{ \mathfrak O\simeq\mathfrak O' \Longrightarrow C_S(\mathfrak O,z)\cong_S C_S(\mathfrak O',z') }
+\boxed{ \tau_\phi:Z_S(\mathfrak O)\leftrightarrow Z_S(\mathfrak O'). }
 ```
 
-for every admissibly corresponding auxiliary choice `z,z'` under the frozen recoding rule.
+For finite auxiliary classes this transport must be an exact bijection. It may not be chosen after candidate outcomes are inspected.
 
-A candidate that changes under an admissible recoding is classified **representation-dependent** at the claimed scope.
+The transport must satisfy the coherence controls
 
-### 7.5 Cross-family quantifier
+```math
+\boxed{ \tau_{\mathrm{id}}=\mathrm{id} }
+```
+
+and, whenever admissible operational isomorphisms compose,
+
+```math
+\boxed{ \tau_{\psi\circ\phi}=\tau_\psi\circ\tau_\phi. }
+```
+
+Representation invariance is then tested by the exact rule
+
+```math
+\boxed{ \forall z\in Z_S(\mathfrak O),\quad C_S(\mathfrak O,z)\cong_S C_S(\mathfrak O',\tau_\phi(z)). }
+```
+
+This replaces analyst judgment about which auxiliary choice in the recoded system “corresponds” to `z`.
+
+If no exact prospective transport can be specified, the candidate specification is incomplete for that representation-invariance scope.
+
+A candidate that changes under an admissible recoding and its frozen auxiliary transport is classified **representation-dependent** at the claimed scope.
+
+### 7.6 Cross-family quantifier
 
 “Shared across system classes” is quantified prospectively.
 
 A candidate `S` is **shared across its declared family scope** iff:
 
 1. `\operatorname{Scope}(S)` was frozen before system construction;
-2. the same preregistered candidate construction `C_S`, property `P_S`, auxiliary semantics `Z_S`, and output-equivalence rule `\cong_S` are used in every family in that scope; and
+2. the same preregistered candidate construction `C_S`, property `P_S`, auxiliary semantics `Z_S`, output-equivalence rule `\cong_S`, and applicable transport rules `\tau_\phi` are used in every family in that scope; and
 3. the candidate passes its required criteria in every preregistered instance of every family in that scope.
 
 If
@@ -440,11 +506,23 @@ such that all of the following hold exactly:
 
 4. **Exhaustive finite recoding.** For each finite F5 base instance, all state-label bijections and all action-label bijections are tested exhaustively, subject to exact preservation of the operational system above. The identity recoding is included as a control.
 
-A candidate structure `S` passes F5 representation invariance only if its declared classification and all claimed invariant content are preserved under the induced transport for every admissible twin recoding.
+5. **Frozen auxiliary transport.** For every F5 operational twin isomorphism `\phi=(\phi_X,\phi_A)` and every primary candidate whose scope includes F5, the candidate specification must provide the exact prospective map
 
-For scalar or discrete invariants, equality must be exact. For structured outputs, preservation means isomorphism under the mapping induced by `\phi_X` and `\phi_A`; raw labels themselves are ignored.
+   ```math
+   \tau_\phi:Z_S(\mathfrak O)\leftrightarrow Z_S(\mathfrak O')
+   ```
 
-Any primary candidate that changes under an admissible F5 recoding is classified **representation-dependent** at the claimed scope.
+   satisfying the Section 7.5 identity and composition controls.
+
+A candidate structure `S` passes F5 representation invariance only if, for every admissible twin recoding and every admissible auxiliary choice,
+
+```math
+\boxed{ \forall z\in Z_S(\mathfrak O),\quad C_S(\mathfrak O,z)\cong_S C_S(\mathfrak O',\tau_\phi(z)). }
+```
+
+For scalar or discrete invariants, equality must be exact. For structured outputs, preservation means isomorphism under the mapping induced by `\phi_X`, `\phi_A`, and the frozen candidate output rule; raw labels themselves are ignored.
+
+Any primary candidate that changes under an admissible F5 recoding and its frozen auxiliary transport is classified **representation-dependent** at the claimed scope.
 
 Continuous-coordinate recodings are not part of the primary F5 v1 control. Any such extension requires a prospective preregistration amendment before inspection of the added candidate's outcomes.
 
@@ -488,7 +566,7 @@ The primary additional battery is organized by ontological level:
 
 The labels in this table are **candidate families**, not claims that the family as a whole is testable or present.
 
-For every primary candidate actually evaluated, the candidate-specification record must instantiate an exact `C_S`, `P_S`, `Z_S`, `\cong_S`, and prospectively declared scope as required by Section 7.
+For every primary candidate actually evaluated, the candidate-specification record must instantiate an exact `C_S`, `P_S`, complete `Z_S`, `\cong_S`, applicable auxiliary transports `\tau_\phi`, and prospectively declared scope as required by Section 7.
 
 Thus, for example, “topology” is not a test. A specific topology construction from frozen operational data is a testable candidate. “Geometry” is not a test. A specific metric, pseudometric, or local-response construction with a frozen derivation rule is a testable candidate.
 
@@ -512,7 +590,7 @@ A specification, provenance, enumeration, or implementation failure is a **contr
 
 ### FORCED_AT_TESTED_SCOPE
 
-The exact candidate construction is present throughout its prospectively declared scope, satisfies the operational-necessity rule, survives admissible representation changes, and uses the same frozen candidate contract in every scoped family.
+The exact candidate construction is present throughout its prospectively declared scope, satisfies auxiliary completeness and the operational-necessity rule, survives admissible representation changes under the frozen auxiliary transports, and uses the same frozen candidate contract in every scoped family.
 
 This label is always scope-indexed. It may not be shortened in interpretation to “universally forced.”
 
@@ -630,6 +708,12 @@ x_A=x_B \not\Rightarrow \mathcal T_A=\mathcal T_B
 \text{one geometric construction survives} \not\Rightarrow \text{geometry is universally foundational}
 ```
 
+```math
+Z_S(\mathfrak O)=\{\varnothing\} \not\Rightarrow \text{the construction is genuinely auxiliary-free}
+```
+
+unless auxiliary completeness has been established under Section 7.2.
+
 No scalar “revisability” quantity is assumed by this preregistration.
 
 No universal geometry is assumed.
@@ -645,7 +729,7 @@ No universal order is assumed.
 The strongest warranted positive result from STRUCTURE-001 is:
 
 ```math
-\boxed{ \text{A preregistered candidate construction is forced at tested scope: it is mechanically induced from the frozen operational object, invariant under the tested admissible representations, and shared across every family in its prospectively declared scope.} }
+\boxed{ \text{A preregistered candidate construction is forced at tested scope: it is mechanically induced from the frozen operational object, auxiliary-complete, invariant under the tested admissible representations and frozen auxiliary transports, and shared across every family in its prospectively declared scope.} }
 ```
 
 If the declared scope contains only one family, the result is family-local.
@@ -684,7 +768,7 @@ The study succeeds if it produces a reproducible, scope-indexed classification o
 3. representation-dependent;
 4. refuted;
 
-with explicit candidate construction maps, declared scopes, auxiliary-choice classes, and minimal counterexamples where applicable.
+with explicit candidate construction maps, declared scopes, auxiliary-complete choice classes, frozen auxiliary transports, and minimal counterexamples where applicable.
 
 The study does not require discovery of a positive universal structure.
 
@@ -708,7 +792,7 @@ No later theory may be used to rewrite the earlier operational object merely to 
 
 ## 17. Prospective specification, construction, and evaluation freeze
 
-This preregistration freezes the scientific question, operational direction, five family roles, F4 sufficient-state rules, F5 operational-isomorphism rules, structure layers, candidate-family battery, classification system, forbidden inferences, and claim ceiling.
+This preregistration freezes the scientific question, operational direction, five family roles, F4 sufficient-state rules, F5 operational-isomorphism rules, auxiliary-completeness rule, auxiliary-transport rule, structure layers, candidate-family battery, classification system, forbidden inferences, and claim ceiling.
 
 It does **not** yet instantiate executable system instances or exact candidate construction maps.
 
@@ -721,12 +805,14 @@ Before exact F1–F5 system instances are selected or constructed, a separately 
 - exact construction map `C_S`;
 - exact defining property `P_S`;
 - complete admissible auxiliary-choice class `Z_S`;
+- an auxiliary-completeness justification satisfying Section 7.2;
 - exact equality / isomorphism criterion `\cong_S`;
+- exact auxiliary transport `\tau_\phi` for every applicable admissible operational isomorphism, including identity and composition controls;
 - all applicability restrictions;
 - all auxiliary assumptions;
 - and the deterministic procedure or formal proof used to test operational necessity.
 
-The family scope and candidate construction must therefore be frozen **before system construction**, not after candidate performance is observed.
+The family scope, candidate construction, auxiliary class, auxiliary-completeness argument, and auxiliary transports must therefore be frozen **before system construction**, not after candidate performance is observed.
 
 If a primary candidate lacks this complete specification, then:
 
@@ -752,7 +838,7 @@ Only after the candidate-specification manifest is frozen may a prospective syst
 
 That manifest must be committed and state-recorded before implementation or any primary structure classification is inspected.
 
-After system construction begins, no primary candidate scope, construction map, property, auxiliary-choice class, output-equivalence rule, or classification criterion may be altered.
+After system construction begins, no primary candidate scope, construction map, property, auxiliary-choice class, auxiliary-completeness argument, auxiliary transport, output-equivalence rule, or classification criterion may be altered.
 
 ### 17.3 Execution order
 
@@ -776,7 +862,7 @@ SURVIVAL MATRIX + MINIMAL COUNTEREXAMPLES
 INTERPRET ONLY UNDER THE FROZEN CLAIM CEILING
 ```
 
-Any failure of a preregistered candidate specification, operational equivalence, enumeration, provenance, or implementation control is reported as a control failure and does not become evidence for or against the candidate mathematical structure.
+Any failure of a preregistered candidate specification, auxiliary-completeness control, auxiliary-transport control, operational equivalence, enumeration, provenance, or implementation control is reported as a control failure and does not become evidence for or against the candidate mathematical structure.
 
 No code is authorized by this preregistration itself.
 
