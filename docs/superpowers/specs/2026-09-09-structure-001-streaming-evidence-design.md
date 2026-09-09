@@ -14,7 +14,7 @@ This amendment changes only how implementation-control evidence is committed, re
 
 The first complete control traversal under implementation `d01e9676c9ff2f96772105f17adac56de86ab975` demonstrated that full canonical-ledger retention is operationally expensive: approximately 9.7 GB of retained control material for one run. The traversal reached the frozen expected cardinalities, but the retained artifacts are no longer available in the current execution environment, so that run cannot satisfy the retained-artifact verification gate.
 
-That run is therefore classified prospectively and permanently as:
+That run is recorded hereafter and permanently as:
 
 ```text
 CONTROL_RUN_A0
@@ -72,6 +72,8 @@ Advantages:
 ### C. Pure commutative streaming accumulator
 
 Cheapest storage, but would introduce a less familiar multiset-commitment construction and a larger cryptographic-review burden. Rejected for V1 implementation controls.
+
+CPU optimization of the scientific constructors/canonicalizers is explicitly outside this amendment. Any optimized canonicalizer would require a separate prospective control amendment and extensional-equivalence evidence before it could participate in an authoritative control run.
 
 ## 4. Exact commitment algorithm
 
@@ -158,6 +160,8 @@ Root_v3(T,R) = SHA256(
 
 Therefore duplication or deletion changes either the count, the tree digest, or both.
 
+The acceptance interpretation is computational rather than information-theoretic: equality of roots is treated as equality of the committed record multisets subject to the collision resistance of SHA-256. This protocol makes no stronger collision-impossibility claim.
+
 All leaf, chunk, and intermediate Merkle-level files are transient control machinery and are deleted only after the compact retained receipt has been durably written and self-checked.
 
 ## 5. Retained evidence
@@ -192,7 +196,18 @@ witness_set_root
 all_recodings_valid
 ```
 
-`witness_set_root` commits to the complete emitted `(phi_X,phi_A)` witness multiset for that base. The run fails immediately if:
+For base `B`, define the witness multiset records as canonical encodings of `(phi_X,phi_A)` for every emitted recoding witness. Define:
+
+```text
+witness_set_root = Root_v3(
+    "F5_WITNESS:" + BaseID,
+    witness_record_multiset
+)
+```
+
+using the same fixed-width leaf-sort/Merkle construction above, with the full ASCII tag `F5_WITNESS:<BaseID>` providing domain separation.
+
+The run fails immediately if:
 
 - a witness is not a bijection;
 - a witness is duplicated;
@@ -206,7 +221,7 @@ The global F5 recoding count remains the actual number of emitted recoding recor
 
 Retain a small deterministic diagnostic sample from each ledger so later review has inspectable concrete records without retaining the full universe.
 
-Sampling rule:
+For each diagnostic candidate, let `m` be its canonical source-metadata bytes (empty only when the ledger record type has no separate source metadata), and define:
 
 ```text
 sample_key = SHA256(
@@ -214,10 +229,18 @@ sample_key = SHA256(
     + T.encode("ascii")
     + b"\0"
     + canonical_record
+    + b"\0"
+    + m
 )
 ```
 
-Retain the 32 records with lexicographically smallest `sample_key` values per ledger, with full canonical record bytes and source metadata. This rule is outcome-independent and fixed before A1.
+Order diagnostic candidates lexicographically by:
+
+```text
+(sample_key, canonical_record, m)
+```
+
+and retain the first 32 candidates per ledger as a multiset; exact duplicates remain duplicate retained entries. This supplies a total byte-level ordering without relying on machine iteration order.
 
 Diagnostic witnesses are for inspection/debugging only. Acceptance depends on full-stream commitments and exact counts, not sample behavior.
 
