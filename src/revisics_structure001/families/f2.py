@@ -1,6 +1,6 @@
 from typing import Iterator
 
-from ..model import ControlFailure, F2Object
+from ..model import ControlFailure, F1Object, F2Object
 from .f1 import iter_f1
 
 
@@ -41,3 +41,19 @@ def iter_f2(n: int, m: int) -> Iterator[F2Object]:
     for base in iter_f1(n, m):
         for partition in partitions:
             yield F2Object(n=n, m=m, targets=base.targets, partition=partition)
+
+
+def transport_f2(obj, witness):
+    from .f1 import transport_f1, validate_transport_witness
+
+    validate_transport_witness(obj.n, obj.m, witness)
+    base = transport_f1(F1Object(obj.n, obj.m, obj.targets), witness)
+    labels = [0] * obj.n
+    for old_x, block in enumerate(obj.partition):
+        labels[witness.phi_x[old_x]] = block
+    return F2Object(
+        n=obj.n,
+        m=obj.m,
+        targets=base.targets,
+        partition=normalize_partition(tuple(labels)),
+    )

@@ -76,3 +76,31 @@ def path_is_admissible(
         resource = update
         previous_target = target
     return True
+
+
+def transport_f3(obj, witness):
+    from .f1 import transport_f1, validate_transport_witness
+    from ..model import F1Object
+
+    validate_transport_witness(obj.n, obj.m, witness)
+    base = transport_f1(F1Object(obj.n, obj.m, obj.targets), witness)
+    old_edges = edge_list(obj.n, obj.m, obj.targets)
+    new_edges = edge_list(obj.n, obj.m, base.targets)
+    new_index = {edge: index for index, edge in enumerate(new_edges)}
+    k = len(old_edges)
+    new_costs = [0] * k
+    new_updates: list[int | None] = [None] * (2 * k)
+    for old_index, (x, a, y) in enumerate(old_edges):
+        transported_edge = (witness.phi_x[x], witness.phi_a[a], witness.phi_x[y])
+        ni = new_index[transported_edge]
+        new_costs[ni] = obj.costs[old_index]
+        for resource in (0, 1):
+            new_updates[resource * k + ni] = obj.updates[resource * k + old_index]
+    return F3Object(
+        n=obj.n,
+        m=obj.m,
+        targets=base.targets,
+        costs=tuple(new_costs),
+        updates=tuple(new_updates),
+        regimes=obj.regimes,
+    )

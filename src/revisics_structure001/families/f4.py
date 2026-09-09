@@ -118,3 +118,35 @@ def has_current_state_collision(obj: F4Object) -> bool:
             if by_terminal[terminal] >= 2:
                 return True
     return False
+
+
+def _transport_history(history, witness):
+    return tuple(
+        witness.phi_x[value] if index % 2 == 0 else witness.phi_a[value]
+        for index, value in enumerate(history)
+    )
+
+
+def transport_f4(obj, witness):
+    from .f1 import transport_f1, validate_transport_witness
+    from ..model import F1Object
+
+    validate_transport_witness(obj.n, obj.m, witness)
+    base = transport_f1(F1Object(obj.n, obj.m, obj.targets), witness)
+    transported_decisions = []
+    for decision in obj.decisions:
+        key = decision.key
+        new_key = ExtensionKey(
+            history=_transport_history(key.history, witness),
+            action=witness.phi_a[key.action],
+            target=witness.phi_x[key.target],
+        )
+        transported_decisions.append(HistoryDecision(new_key, decision.allowed))
+    transported_decisions.sort(key=lambda d: d.key)
+    return F4Object(
+        n=obj.n,
+        m=obj.m,
+        targets=base.targets,
+        horizon=obj.horizon,
+        decisions=tuple(transported_decisions),
+    )
