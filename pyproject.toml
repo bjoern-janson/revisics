@@ -1,0 +1,9 @@
+[project]
+name = "revisics-structure001"
+version = "0.0.0"
+requires-python = "==3.13.5"
+dependencies = []
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = ["src"]
